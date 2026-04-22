@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartRoll - Teacher Dashboard</title>
+    <link rel="stylesheet" href="teacher.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-qrcode"></i>
+                    <span>SmartRoll</span>
+                </div>
+                <button class="toggle-btn" id="toggle-sidebar">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#"><i class="fas fa-th-large"></i> <span>Dashboard</span></a></li>
+                    <li><a href="#qr-section"><i class="fas fa-qrcode"></i> <span>QR Attendance</span></a></li>
+                    <li><a href="#notes-section"><i class="fas fa-file-upload"></i> <span>Upload Notes</span></a></li>
+                    <li><a href="#assignment-section"><i class="fas fa-tasks"></i> <span>Create Assignment</span></a></li>
+                    <li><a href="#students-section"><i class="fas fa-users"></i> <span>Manage Students</span></a></li>
+                    <li><a href="#stats-section"><i class="fas fa-chart-bar"></i> <span>View Attendance</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <div class="nav-left">
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2 class="page-title">Dashboard</h2>
+                </div>
+                <div class="nav-right">
+                    <div class="notification-bell">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <span class="user-name">Prof. Anderson</span>
+                            <span class="user-role">Senior Teacher</span>
+                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Anderson&background=0D8ABC&color=fff" alt="Profile" class="avatar">
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Welcome Section -->
+                <section class="welcome-section reveal">
+                    <div class="welcome-text">
+                        <h1>Welcome, Teacher 👨‍🏫</h1>
+                        <p>Manage attendance and classroom easily with SmartRoll's smart tools.</p>
+                    </div>
+                </section>
+
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- QR Attendance Section (Main Focus) -->
+                    <section id="qr-section" class="card qr-card reveal">
+                        <div class="card-header">
+                            <h3><i class="fas fa-qrcode"></i> QR Attendance System</h3>
+                            <span class="status-tag">Live</span>
+                        </div>
+                        <div class="qr-controls">
+                            <div class="input-group">
+                                <label>Select Subject</label>
+                                <select id="subject-select">
+                                    <option>Mathematics 101</option>
+                                    <option>Physics Advanced</option>
+                                    <option>Computer Science</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Select Class</label>
+                                <select id="class-select">
+                                    <option>Section A</option>
+                                    <option>Section B</option>
+                                    <option>Section C</option>
+                                </select>
+                            </div>
+                            <button id="generate-qr-btn" class="btn-primary">
+                                <i class="fas fa-sync-alt"></i> Generate QR Code
+                            </button>
+                        </div>
+                        <div class="qr-display-area">
+                            <div id="qr-placeholder" class="qr-placeholder">
+                                <i class="fas fa-qrcode"></i>
+                                <p>Click generate to start attendance</p>
+                            </div>
+                            <div id="qr-container" class="qr-container hidden">
+                                <div class="qr-wrapper">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=SmartRoll-Attendance-Session-123" alt="QR Code" id="qr-image">
+                                    <div class="qr-overlay"></div>
+                                </div>
+                                <div class="timer-container">
+                                    <div class="timer-circle">
+                                        <svg>
+                                            <circle cx="35" cy="35" r="30"></circle>
+                                            <circle id="timer-progress" cx="35" cy="35" r="30"></circle>
+                                        </svg>
+                                        <span id="timer-text">30</span>
+                                    </div>
+                                    <p>Valid for 30 seconds</p>
+                                </div>
+                                <button id="refresh-qr-btn" class="btn-secondary">
+                                    <i class="fas fa-redo"></i> Refresh
+                                </button>
+                            </div>
+                        </div>
+                        <p class="qr-hint">Students scan this QR to mark attendance automatically</p>
+                    </section>
+
+                    <!-- Upload Notes -->
+                    <section id="notes-section" class="card reveal">
+                        <div class="card-header">
+                            <h3><i class="fas fa-file-upload"></i> Upload Notes</h3>
+                        </div>
+                        <div class="upload-area" id="drop-zone">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag & drop PDF files here or <span>browse</span></p>
+                            <input type="file" id="file-input" hidden>
+                        </div>
+                        <div class="recent-uploads">
+                            <h4>Recent Uploads</h4>
+                            <div class="file-item">
+                                <i class="fas fa-file-pdf"></i>
+                                <span>Calculus_Lec1.pdf</span>
+                                <button class="btn-icon"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Create Assignment -->
+                    <section id="assignment-section" class="card reveal">
+                        <div class="card-header">
+                            <h3><i class="fas fa-tasks"></i> Create Assignment</h3>
+                        </div>
+                        <form class="assignment-form">
+                            <div class="input-group">
+                                <input type="text" placeholder="Assignment Title" required>
+                            </div>
+                            <div class="input-group">
+                                <textarea placeholder="Description & Instructions" rows="3"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <input type="date">
+                                </div>
+                                <button type="submit" class="btn-primary">Post Assignment</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <!-- Manage Students -->
+                    <section id="students-section" class="card reveal">
+                        <div class="card-header">
+                            <h3><i class="fas fa-users"></i> Manage Students</h3>
+                            <button class="btn-text">View All</button>
+                        </div>
+                        <div class="student-list">
+                            <div class="student-item">
+                                <img src="https://ui-avatars.com/api/?name=John+Doe&background=random" alt="Student">
+                                <div class="student-info">
+                                    <span class="name">John Doe</span>
+                                    <span class="id">ID: 2024001</span>
+                                </div>
+                                <div class="student-actions">
+                                    <button class="btn-icon success"><i class="fas fa-check"></i></button>
+                                    <button class="btn-icon danger"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="student-item">
+                                <img src="https://ui-avatars.com/api/?name=Jane+Smith&background=random" alt="Student">
+                                <div class="student-info">
+                                    <span class="name">Jane Smith</span>
+                                    <span class="id">ID: 2024002</span>
+                                </div>
+                                <div class="student-actions">
+                                    <button class="btn-icon success"><i class="fas fa-check"></i></button>
+                                    <button class="btn-icon danger"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-outline w-100"><i class="fas fa-plus"></i> Add New Student</button>
+                    </section>
+
+                    <!-- View Attendance Stats -->
+                    <section id="stats-section" class="card reveal">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-bar"></i> Attendance Overview</h3>
+                        </div>
+                        <div class="stats-container">
+                            <div class="stat-item">
+                                <div class="stat-info">
+                                    <span>Mathematics</span>
+                                    <span>92%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-info">
+                                    <span>Physics</span>
+                                    <span>85%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-info">
+                                    <span>Computer Science</span>
+                                    <span>98%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 98%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="attendance-summary">
+                            <div class="summary-box">
+                                <span class="val">42</span>
+                                <span class="lbl">Present</span>
+                            </div>
+                            <div class="summary-box">
+                                <span class="val">5</span>
+                                <span class="lbl">Absent</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Success Message Toast -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-msg">Success!</span>
+    </div>
+
+    <script src="teacher.js"></script>
+</body>
+</html>
+Modern Responsive Teacher Dashboard UI with QR Attendance Feature - Manus
