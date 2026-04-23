@@ -354,7 +354,7 @@
                 <p>Join SmartRoll to manage your classroom efficiently</p>
             </div>
 
-            <form id="signupForm" class="signup-form" action="/signup" method="POST" novalidate>
+            <form id="signupForm" class="signup-form" action="http://127.0.0.1:5000/signup" method="POST" novalidate>
                 <div class="input-group">
                     <label for="fullname">Full Name</label>
                     <div class="input-wrapper">
@@ -449,8 +449,8 @@
             };
 
             // 3. Form Validation and Submission
-            signupForm.addEventListener('submit', (e) => {
-                e.preventDefault();
+            signupForm.addEventListener('submit', () => {
+                signupBtn.classList.add('loading');
                 
                 let isValid = true;
 
@@ -500,18 +500,7 @@
                         role: roleSelect.value
                     };
 
-                    // Simulate API call
-                    setTimeout(() => {
-                        signupBtn.classList.remove('loading');
-                        signupBtn.disabled = false;
-                        
-                        // Role-based redirection logic
-                        if (formData.role === 'student') {
-                            alert('Account created successfully! Redirecting to Student Dashboard...');
-                        } else if (formData.role === 'teacher') {
-                            alert('Account created successfully! Redirecting to Teacher Dashboard...');
-                        }
-                    }, 2000);
+                
                 }
             });
 

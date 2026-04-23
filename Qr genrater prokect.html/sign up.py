@@ -1,9 +1,16 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template,jsonify
 
 app = Flask(__name__)
+app.route('/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
 
-# Dummy database (demo purpose)
-users = {}
+    print(data)  # check in terminal
+
+    return jsonify({"message": "Signup Success"}), 200
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 @app.route('/')
 def home():
@@ -58,6 +65,7 @@ def teacher_dashboard():
 @app.route('/student_dashboard')
 def student_dashboard():
     return f"Welcome Student 🎓"
+
 
 
 if __name__ == '__main__':
